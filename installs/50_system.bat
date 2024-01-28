@@ -51,6 +51,9 @@ CALL .\70_VLC.bat
 CALL .\80_Git_all.bat
 @IF  ERRORLEVEL 1 GOTO :exit
 
+CALL .\80_Golang.bat
+@IF  ERRORLEVEL 1 GOTO :exit
+
 CALL .\80_python3x.bat
 @IF  ERRORLEVEL 1 GOTO :exit
 
