@@ -15,7 +15,8 @@ IF NOT EXIST "%LOCALAPPDATA%\py.ini" (
   COPY "py.ini" "%LOCALAPPDATA%\py.ini"
 )
 
-CALL "%~dp0\50_Python_Install.bat"
+:: Let user do system install
+::CALL "%~dp0\80_Python3x.bat"
 
 @:: Pause if not interactive
 @:exit
