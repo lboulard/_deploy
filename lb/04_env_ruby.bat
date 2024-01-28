@@ -12,7 +12,6 @@
 
 
 SETX GEM_HOME	"%%LBHOME%%\gems"
-SETX RUBYOPT	"-Eutf-8"
 
 
 @:: Pause if not interactive
