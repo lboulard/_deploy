@@ -10,6 +10,10 @@
   @GOTO :exit
 )
 
+@IF NOT EXIST "%LOCALAPPDATA%\lboulard\logs\."^
+ MD "%LOCALAPPDATA%\lboulard\logs"
+@IF ERRORLEVEL 1 GOTO :exit
+
 CALL .\02_JetBrains-ToolBox.bat
 @IF ERRORLEVEL 1 GOTO :exit
 

@@ -3,6 +3,10 @@
 @CD /D "%~dp0"
 @IF  ERRORLEVEL 1 GOTO :exit
 
+@IF NOT EXIST "%LOCALAPPDATA%\lboulard\logs\."^
+ MD "%LOCALAPPDATA%\lboulard\logs"
+@IF ERRORLEVEL 1 GOTO :exit
+
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% NEQ 0 (
