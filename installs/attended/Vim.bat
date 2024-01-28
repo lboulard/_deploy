@@ -1,0 +1,23 @@
+@SETLOCAL
+@CHCP 65001 >NUL:
+@CD /D "%~dp0..\..\dev\editors\vim"
+@IF  ERRORLEVEL 1 GOTO :exit
+
+@SET GVIM=
+@FOR %%f IN ("gvim-*-amd64.exe") DO @SET "GVIM=%%~f"
+@ECHO SET GVIM=%GVIM%
+@IF NOT DEFINED GVIM (
+ECHO ** ERROR: No Gvim installation program found
+GOTO :exit
+)
+
+".\%GVIM%"
+
+
+@:: Pause if not interactive
+@:exit
+@SET ERR=%ERRORLEVEL%
+@SET ERRORLEVEL=0
+@ECHO %cmdcmdline% | FIND /i "%~0" >NUL
+@IF NOT ERRORLEVEL 1 PAUSE
+@ENDLOCAL&EXIT /B %ERR%
