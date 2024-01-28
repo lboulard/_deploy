@@ -1,6 +1,6 @@
 @SETLOCAL
 @CD /D "%~dp0..\graphics"
-@IF  ERRORLEVEL 1 GOTO :exit
+@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1

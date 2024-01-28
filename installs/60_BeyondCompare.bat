@@ -17,8 +17,9 @@
 @FOR %%f IN ("BCompare-4.*.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
 @IF NOT DEFINED PRG (
-ECHO ** ERROR: No installation program found
-GOTO :exit
+  ECHO ** ERROR: No installation program found
+  SET ERRORLEVEL=64
+  GOTO :exit
 )
 
 @IF NOT EXIST "%LOCALAPPDATA%\lboulard\logs\."^
@@ -33,6 +34,7 @@ GOTO :exit
 @:exit
 @SET ERR=%ERRORLEVEL%
 @IF DEFINED _ELEV GOTO :_elev
+@IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE

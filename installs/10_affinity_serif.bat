@@ -13,13 +13,17 @@
  MD "%LOCALAPPDATA%\lboulard\logs"
 
 Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-photo-2.3.0.msix"
+@IF ERRORLEVEL 1 GOTO :exit
 Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-designer-2.3.0.msix"
+@IF ERRORLEVEL 1 GOTO :exit
 Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-publisher-2.3.0.msix"
+@IF ERRORLEVEL 1 GOTO :exit
 
 @:: Pause if not interactive
 @:exit
 @SET ERR=%ERRORLEVEL%
 @IF DEFINED _ELEV GOTO :_elev
+@IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE

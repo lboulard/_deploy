@@ -1,7 +1,7 @@
 @SETLOCAL
 @CHCP 65001 >NUL:
 @CD /D "%~dp0..\dev\editors"
-@IF  ERRORLEVEL 1 GOTO :exit
+@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
@@ -20,6 +20,7 @@ CALL .\npp8-silent-install.bat
 @:exit
 @SET ERR=%ERRORLEVEL%
 @IF DEFINED _ELEV GOTO :_elev
+@IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE

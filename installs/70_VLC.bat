@@ -1,12 +1,13 @@
 @SETLOCAL
 @CD /D "%~dp0..\players\VLC"
-@IF  ERRORLEVEL 1 GOTO :exit
+@IF ERRORLEVEL 1 GOTO :exit
 
 @SET PRG=
 @FOR %%f IN ("vlc-3.*-win64.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
 @IF NOT DEFINED PRG (
 ECHO ** ERROR: No installation program found
+SET ERRORLEVEL=64
 GOTO :exit
 )
 
@@ -26,6 +27,7 @@ GOTO :exit
 @:exit
 @SET ERR=%ERRORLEVEL%
 @IF DEFINED _ELEV GOTO :_elev
+@IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE

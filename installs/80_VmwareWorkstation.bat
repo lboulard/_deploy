@@ -1,7 +1,7 @@
 @SETLOCAL
 @CHCP 65001 >NUL:
 @CD /D "%~dp0..\dev\VMWare"
-@IF  ERRORLEVEL 1 GOTO :exit
+@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
@@ -17,6 +17,7 @@
 @FOR %%f IN ("VMware-workstation-full-*.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
 @IF NOT DEFINED PRG (
+SET ERRORLEVEL=128
 ECHO ** ERROR: No installation program found
 GOTO :exit
 )
@@ -29,6 +30,7 @@ GOTO :exit
 @:exit
 @SET ERR=%ERRORLEVEL%
 @IF DEFINED _ELEV GOTO :_elev
+@IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE

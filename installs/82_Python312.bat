@@ -1,7 +1,7 @@
 @SETLOCAL
 @CHCP 65001 >NUL:
 @CD /D "%~dp0..\dev\Python3.12"
-@IF  ERRORLEVEL 1 GOTO :exit
+@IF ERRORLEVEL 1 GOTO :exit
 
 @SET PYVER=
 @FOR /D %%f IN ("python-3.12.*-amd64") DO @SET "PYVER=%%~f"
@@ -12,13 +12,25 @@ SET ERRORLEVEL=64
 GOTO :exit
 )
 
+:: check if admin
+@fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
+@IF %ERRORLEVEL% NEQ 0 (
+  @SET _ELEV=1
+  @Powershell.exe "start cmd.exe -arg '/c """%~0"""' -verb runas" && GOTO :exit
+  @ECHO This script needs admin rights.
+  @ECHO To do so, right click on this script and select 'Run as administrator'.
+  @GOTO :exit
+)
 CD "%PYVER%"
 CALL .\python-silent-install.bat"
 
 @:: Pause if not interactive
 @:exit
 @SET ERR=%ERRORLEVEL%
+@IF DEFINED _ELEV GOTO :_elev
+@IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
+@:_elev
 @ENDLOCAL&EXIT /B %ERR%
