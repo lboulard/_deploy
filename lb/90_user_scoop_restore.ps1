@@ -18,7 +18,7 @@ if (-not $?) { throw 'Scoop failed' }
 
 # Required for some software like Libreoffice of flameshot
 start cmd.exe -args '/c "scoop install extras/windowsdesktop-runtime-lts"'  -verb runas
-start cmd.exe -args '/c "scoop install extras/vcredist202"'  -verb runas
+start cmd.exe -args '/c "scoop install extras/vcredist2022"'  -verb runas
 scoop uninstall extras/vcredist202
 
 $json = ((gc ../scoop.json) | ConvertFrom-JSON)
