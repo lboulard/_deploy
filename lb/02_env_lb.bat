@@ -3,6 +3,8 @@
 @CD /D "%~dp0"
 @IF ERRORLEVEL 1 GOTO :exit
 
+SET DEST=C:\lb
+
 :: check if not admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
@@ -10,8 +12,8 @@
   @GOTO :exit
 )
 
-SETX LBHOME 	C:\lb
-SETX LBPROGRAMS C:\lb\Programs
+SETX LBHOME 	%DEST%
+SETX LBPROGRAMS %DEST%\Programs
 
 
 @:: Pause if not interactive
