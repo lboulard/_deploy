@@ -16,7 +16,7 @@
 )
 
 :: <https://www.irfanview.com/faq.htm#PAGE12>
-.\iview462_x64_setup.exe /silent^
+.\iview466_x64_setup.exe /silent^
  /desktop=0^
  /thumbs=0^
  /group=1^
@@ -24,7 +24,7 @@
  /assoc=1
 @IF ERRORLEVEL 1 GOTO :exit
 
-.\iview462_plugins_x64_setup.exe /silent
+.\iview466_plugins_x64_setup.exe /silent
 
 @:: Pause if not interactive
 @:exit
