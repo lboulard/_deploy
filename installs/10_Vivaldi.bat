@@ -15,7 +15,7 @@
 
 :: requires writable fodler to extract temporary files
 
-@COPY /Z /V /Y Vivaldi.6.5.3206.57.x64.exe "%TEMP%\Vivaldi.exe"
+@COPY /Z /V /Y Vivaldi.6.6.3271.45.x64.exe "%TEMP%\Vivaldi.exe"
 @IF ERRORLEVEL 1 GOTO :exit
 
 "%TEMP%\Vivaldi.exe" --vivaldi-silent --do-not-launch-chrome
