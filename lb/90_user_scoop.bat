@@ -2,6 +2,8 @@
 @CHCP 65001 >NUL:
 @CD /D "%~dp0"
 @IF ERRORLEVEL 1 GOTO :exit
+@CALL ".\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
 
 WHERE scoop >NUL 2>&1
 @IF %ERRORLEVEL% EQU 0 GOTO :configure

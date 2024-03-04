@@ -2,6 +2,8 @@
 @CHCP 65001 >NUL:
 @CD /D "%~dp0"
 @IF ERRORLEVEL 1 GOTO :exit
+@CALL ".\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if not admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
@@ -15,7 +17,7 @@
  @GOTO :exit
 )
 
-@CALL :normalize "..\Programs"
+@CALL :normalize "%ROOT_LB%\Programs"
 @SET "SRCD=%RETVAL%"
 @CALL :normalize "%LBPROGRAMS%"
 @SET "DEST=%RETVAL%"
