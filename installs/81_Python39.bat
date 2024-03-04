@@ -1,6 +1,8 @@
 @SETLOCAL
 @CHCP 65001 >NUL:
-@CD /D "%~dp0..\dev\Python3.9"
+@CALL "%~dp0\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
+@CD /D "%ROOT_PYTHON39%"
 @IF ERRORLEVEL 1 GOTO :exit
 
 @SET PYVER=

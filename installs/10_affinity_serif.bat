@@ -1,6 +1,9 @@
 @SETLOCAL
-@CD /D "%~dp0..\graphics\affinity\2.3"
-@IF  ERRORLEVEL 1 GOTO :exit
+@CHCP 65001 >NUL:
+@CALL "%~dp0\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
+@CD /D "%ROOT_AFFINITY%\2.3"
+@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if not admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1

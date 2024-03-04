@@ -1,6 +1,8 @@
 @SETLOCAL
 @CHCP 65001 >NUL:
-@CD /D "%~dp0..\BeyondCompare"
+@CALL "%~dp0\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
+@CD /D "%ROOT_BEYONDCOMPARE%"
 @IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin

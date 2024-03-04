@@ -1,6 +1,8 @@
 @SETLOCAL
 @CHCP 65001 >NUL:
-@CD /D "%~dp0..\shell\PowerToys"
+@CALL "%~dp0\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
+@CD /D "%ROOT_POWERTOYS%"
 @IF ERRORLEVEL 1 GOTO :exit
 
 :: check if not admin

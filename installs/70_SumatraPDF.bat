@@ -1,5 +1,8 @@
 @SETLOCAL
-@CD /D "%~dp0..\players\"
+@CHCP 65001 >NUL:
+@CALL "%~dp0\00_config.bat"
+@IF ERRORLEVEL 1 GOTO :exit
+@CD /D "%ROOT_SUMATRAPDF%"
 @IF ERRORLEVEL 1 GOTO :exit
 
 @SET PRG=
