@@ -26,6 +26,9 @@ CALL .\02_PowerToys.bat
 CALL .\10_affinity_serif.bat
 @IF ERRORLEVEL 1 GOTO :exit
 
+CALL .\10_Ruby2x.bat
+@IF ERRORLEVEL 1 GOTO :exit
+
 CALL .\10_Ruby3x.bat
 @IF ERRORLEVEL 1 GOTO :exit
 
