@@ -13,9 +13,27 @@
   @GOTO :exit
 )
 
-IF NOT EXIST "%LOCALAPPDATA%\py.ini" (
+@ECHO OFF
+
+IF NOT EXIST "%LOCALAPPDATA%\py.ini" @(
+  ECHO.COPY "py.ini" "%LOCALAPPDATA%\py.ini"
   COPY "py.ini" "%LOCALAPPDATA%\py.ini"
+  IF ERRORLEVEL 1 GOTO :exit
 )
+
+IF EXIST "pip.ini" (
+  IF NOT EXIST "%LOCALAPPDATA%\pip\pip.ini" @(
+    IF NOT EXIST "%LOCALAPPDATA%\pip\." MKDIR "%LOCALAPPDATA%\pip"
+    ECHO.COPY "pip.ini" "%LOCALAPPDATA%\pip\pip.ini"
+    COPY "pip.ini" "%LOCALAPPDATA%\pip\pip.ini"
+    IF ERRORLEVEL 1 GOTO :exit
+  )
+)
+
+@ECHO ON
+
+:: reset ERRORLEVEL to 0
+@type nul
 
 :: Let user do system install
 ::CALL "%~dp0\80_Python3x.bat"
@@ -23,10 +41,8 @@ IF NOT EXIST "%LOCALAPPDATA%\py.ini" (
 @:: Pause if not interactive
 @:exit
 @SET ERR=%ERRORLEVEL%
-@IF DEFINED _ELEV GOTO :_elev
 @IF ERRORLEVEL 1 @ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 @SET ERRORLEVEL=0
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
-@:_elev
 @ENDLOCAL&EXIT /B %ERR%
