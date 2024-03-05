@@ -10,10 +10,13 @@
   @GOTO :exit
 )
 
-
-SETX PIPX_BIN_DIR	"%%LOCALAPPDATA%%\pipx\bin"
-SETX PIPX_HOME		"%%LOCALAPPDATA%%\pipx"
-
+IF EXIST C:\DEV\. (
+  SETX PIPX_BIN_DIR	"C:\Dev\Apps\pipx\bin"
+  SETX PIPX_HOME	"C:\Dev\Apps\pipx"
+) ELSE (
+  SETX PIPX_BIN_DIR	"%%LOCALAPPDATA%%\pipx\bin"
+  SETX PIPX_HOME	"%%LOCALAPPDATA%%\pipx"
+)
 
 @:: Pause if not interactive
 @:exit
