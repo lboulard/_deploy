@@ -10,10 +10,10 @@
   @GOTO :exit
 )
 
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\." MD "%XDG%\xdg"
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\cache\." MD "%XDG%\cache"
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\share\." MD "%XDG%\share"
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\config\." MD "%XDG%\config"
+@IF NOT EXIST "%LOCALAPPDATA%\xdg\." MD "%LOCALAPPDATA%\xdg"
+@IF NOT EXIST "%LOCALAPPDATA%\xdg\cache\." MD "%LOCALAPPDATA%\xdg\cache"
+@IF NOT EXIST "%LOCALAPPDATA%\xdg\share\." MD "%LOCALAPPDATA%\xdg\share"
+@IF NOT EXIST "%LOCALAPPDATA%\xdg\config\." MD "%LOCALAPPDATA%\xdg\config"
 @IF ERRORLEVEL 1 (
  ECHO Failure ERRORLEVEL=%ERRORLEVEL%
  GOTO :exit
