@@ -21,7 +21,7 @@ start cmd.exe -args '/c "scoop install extras/windowsdesktop-runtime-lts"'  -ver
 start cmd.exe -args '/c "scoop install extras/vcredist2022"'  -verb runas
 scoop uninstall extras/vcredist202
 
-$json = ((gc ../scoop.json) | ConvertFrom-JSON)
+$json = ((gc ../../scoop.json) | ConvertFrom-JSON)
 ForEach($bucket in $json.buckets) {
     scoop bucket add $bucket.Name $bucket.Source
 }

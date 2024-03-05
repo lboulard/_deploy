@@ -6,7 +6,10 @@
 @IF ERRORLEVEL 1 GOTO :exit
 
 WHERE scoop >NUL 2>&1
-@IF %ERRORLEVEL% EQU 0 GOTO :configure
+@IF %ERRORLEVEL% EQU 0 (
+  @ECHO ALREADY INSTALLED
+  @GOTO :exit
+)
 
 Powershell.exe -NoProfile "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
 @IF ERRORLEVEL 1 GOTO :exit
@@ -19,10 +22,6 @@ Powershell.exe -NoProfile "irm get.scoop.sh -outfile '%TEMP%/install_scoop.ps1'"
 @:install
 PowerShell.exe -NoProfile^
  "%TEMP%\install_scoop.ps1 -ScoopDir '%LBHOME%\Scoop' -ScoopGlobalDir '%LBHOME%\GlobalScoopApps'"
-@IF ERRORLEVEL 1 GOTO :exit
-
-@:configure
-Powershell.exe -NoProfile "%~dpn0_restore.ps1"
 @IF ERRORLEVEL 1 GOTO :exit
 
 @:: Pause if not interactive
