@@ -28,11 +28,10 @@
 )
 
 
-robocopy.exe "%SRCD%" "%DEST%"^
- /E /XJ /J /COMPRESS /R:5 /NJH /NFL /NC^
- XD Code Ruby*-x64 Scoop Services Vim *.vhdx qcom
+robocopy.exe "%SRCD%\Code" "%DEST%\Code"^
+ /E /XJ /J /COMPRESS /R:5 /NJH /NFL /NC
 
-@IF ERRORLEVEL 1 ECHO Failure ERRORLEVEL=%ERRORLEVEL%
+@IF ERRORLEVEL 8 ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 
 
 @:: Pause if not interactive

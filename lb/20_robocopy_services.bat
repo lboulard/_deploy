@@ -31,7 +31,7 @@
 robocopy.exe "%SRCD%\Services" "%DEST%\Services"^
  /E /XJ /J /COMPRESS /R:5 /NJH
 
-@IF ERRORLEVEL 1 ECHO Failure ERRORLEVEL=%ERRORLEVEL%
+@IF ERRORLEVEL 8 ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 
 
 @:: Pause if not interactive

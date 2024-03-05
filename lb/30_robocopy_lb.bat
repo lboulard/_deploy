@@ -30,14 +30,19 @@
 
 robocopy.exe "%SRCD%" "%DEST%"^
  /E /XJ /J /COMPRESS /R:5 /NJH /NFL /NC^
- /XF protected^
- /XD Programs Code gems Ruby*-x64 Scoop GlobalScoopApps Services Vim^
-  protected
+ /XD "%SRCD%\Programs"^
+     "%SRCD%\Code"^
+     "%SRCD%\gems"^
+     "%SRCD%\Ruby*-x64"
+     "%SRCD%\Scoop"^
+     "%SRCD%\GlobalScoopApps"^
+     "%SRCD%\Services"^
+     "%SRCD%\Vim"
 
 @IF NOT EXIST "%DEST%\gems\." @MD "%DEST%\gems"
 @IF NOT EXIST "%DEST%\protected\." @MD "%DEST%\protected"
 
-@IF ERRORLEVEL 1 ECHO Failure ERRORLEVEL=%ERRORLEVEL%
+@IF ERRORLEVEL 8 ECHO Failure ERRORLEVEL=%ERRORLEVEL%
 
 
 @:: Pause if not interactive
