@@ -5,6 +5,15 @@
 @CD /D "%ROOT_MSYS2%"
 @IF ERRORLEVEL 1 GOTO :exit
 
+
+:: check if not admin
+@fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
+@IF %ERRORLEVEL% EQU 0 (
+  @ECHO This script shall run as current user.
+  @SET ERRORLEVEL=128
+  @GOTO :exit
+)
+
 @SET PRG=
 @FOR %%f IN ("msys2-x86_64-*.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
