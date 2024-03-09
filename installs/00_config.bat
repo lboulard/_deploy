@@ -17,6 +17,7 @@ SET ROOT_WINCOMPOSE="%ROOT%\keyboard"
 SET ROOT_GIT="%ROOT%\dev\git"
 SET ROOT_GOLANG="%ROOT%\dev\go"
 SET ROOT_VMWARE="%ROOT%\dev\VMWare"
+SET ROOT_MSYS2="%ROOT%\dev\msys2"
 
 SET ROOT_PYTHON="%ROOT%\dev\python"
 SET ROOT_PYTHON39="%ROOT%\dev\Python3.9"
