@@ -22,10 +22,10 @@ IF NOT EXIST "%LOCALAPPDATA%\py.ini" @(
 )
 
 IF EXIST "pip.ini" (
-  IF NOT EXIST "%LOCALAPPDATA%\pip\pip.ini" @(
-    IF NOT EXIST "%LOCALAPPDATA%\pip\." MKDIR "%LOCALAPPDATA%\pip"
-    ECHO.COPY "pip.ini" "%LOCALAPPDATA%\pip\pip.ini"
-    COPY "pip.ini" "%LOCALAPPDATA%\pip\pip.ini"
+  IF NOT EXIST "%APPDATA%\pip\pip.ini" @(
+    IF NOT EXIST "%APPDATA%\pip\." MKDIR "%APPDATA%\pip"
+    ECHO.COPY "pip.ini" "%APPDATA%\pip\pip.ini"
+    COPY "pip.ini" "%APPDATA%\pip\pip.ini"
     IF ERRORLEVEL 1 GOTO :exit
   )
 )
