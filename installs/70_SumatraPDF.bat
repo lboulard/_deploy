@@ -5,15 +5,6 @@
 @CD /D "%ROOT_SUMATRAPDF%"
 @IF ERRORLEVEL 1 GOTO :exit
 
-@SET PRG=
-@FOR %%f IN ("SumatraPDF-*-64-install.exe") DO @SET "PRG=%%~f"
-@ECHO SET PRG=%PRG%
-@IF NOT DEFINED PRG @(
-  @ECHO ** ERROR: No installation program found
-  @CALL :errorlevel 64
-  @GOTO :exit
-)
-
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% NEQ 0 (
@@ -22,6 +13,15 @@
   @ECHO This script needs admin rights.
   @ECHO To do so, right click on this script and select 'Run as administrator'.
   @CALL :errorlevel 128
+  @GOTO :exit
+)
+
+@SET PRG=
+@FOR %%f IN ("SumatraPDF-*-64-install.exe") DO @SET "PRG=%%~f"
+@ECHO SET PRG=%PRG%
+@IF NOT DEFINED PRG @(
+  @ECHO ** ERROR: No installation program found
+  @CALL :errorlevel 64
   @GOTO :exit
 )
 
