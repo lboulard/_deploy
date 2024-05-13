@@ -21,7 +21,7 @@ SETX NOMAD_ADDR			"http://elara.lan.lboulard.net:4646"
 @:exit
 @SET ERR=%ERRORLEVEL%
 @IF DEFINED _ELEV GOTO :_elev
-@SET ERRORLEVEL=0
+@TYPE NUL>NUL
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev

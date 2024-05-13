@@ -17,7 +17,7 @@ GOTO :exit
 @:: Pause if not interactive
 @:exit
 @SET ERR=%ERRORLEVEL%
-@SET ERRORLEVEL=0
+@TYPE NUL>NUL
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
 @ENDLOCAL&EXIT /B %ERR%
