@@ -7,6 +7,7 @@
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
   @ECHO This script shall run as current user.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -38,3 +39,6 @@ SETX	QT_AUTO_SCREEN_SCALE_FACTOR	0
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

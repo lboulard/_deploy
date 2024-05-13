@@ -12,16 +12,17 @@
   @Powershell.exe "start cmd.exe -arg '/c """%~0"""' -verb runas" && GOTO :exit
   @ECHO This script needs admin rights.
   @ECHO To do so, right click on this script and select 'Run as administrator'.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
 @SET PRG=
 @FOR %%f IN ("VMware-workstation-full-*.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
-@IF NOT DEFINED PRG (
-SET ERRORLEVEL=128
-ECHO ** ERROR: No installation program found
-GOTO :exit
+@IF NOT DEFINED PRG @(
+  @ECHO ** ERROR: No installation program found
+  @CALL :errorlevel 64
+  @GOTO :exit
 )
 
 ".\%PRG%" /s /v/qn EULAS_AGREED=1 AUTOSOFTWAREUPDATE=0 DATACOLLECTION=1^
@@ -38,3 +39,6 @@ GOTO :exit
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

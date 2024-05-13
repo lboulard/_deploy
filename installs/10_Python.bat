@@ -9,7 +9,7 @@
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
   @ECHO This script shall run as current user.
-  @SET ERRORLEVEL=128
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -46,3 +46,6 @@ IF EXIST "pip.ini" (
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

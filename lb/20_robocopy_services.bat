@@ -9,12 +9,14 @@
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
   @ECHO This script shall run as current user.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
 @IF NOT DEFINED LBHOME (
- @ECHO Missing LBHOME environment variable
- @GOTO :exit
+  @ECHO Missing LBHOME environment variable
+  @CALL :errorlevel 1
+  @GOTO :exit
 )
 
 @CALL :normalize "%ROOT_LB%"
@@ -22,8 +24,8 @@
 @CALL :normalize "%LBHOME%"
 @SET "DEST=%RETVAL%"
 @IF "%SRCD%" == "%DEST%" (
- @SET ERRORLEVEL=128
  @ECHO Cannot copy on same path ^("%SRCD%" == "%DEST%"^)
+ @CALL :errorlevel 128
  @GOTO :exit
 )
 
@@ -44,6 +46,8 @@ robocopy.exe "%SRCD%\Services" "%DEST%\Services"^
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
 
+:errorlevel
+@EXIT /B %~1
 
 @:normalize
 @SET RETVAL=%~f1

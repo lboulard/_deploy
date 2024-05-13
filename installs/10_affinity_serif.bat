@@ -9,6 +9,7 @@
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
   @ECHO This script shall run as current user.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -32,3 +33,6 @@ Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-publisher-2.4.0.msix"
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

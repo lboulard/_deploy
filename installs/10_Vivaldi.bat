@@ -7,9 +7,9 @@
 
 :: check if not admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
-@IF %ERRORLEVEL% EQU 0 (
+@IF %ERRORLEVEL% EQU 0 @(
   @ECHO This script shall run as current user.
-  @SET ERRORLEVEL=128
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -21,8 +21,8 @@ COPY /Z /V /Y Vivaldi.6.6.3271.45.x64.exe "%TEMP%\Vivaldi.exe"
 "%TEMP%\Vivaldi.exe" --vivaldi-silent --do-not-launch-chrome
 
 @IF %ERRORLEVEL% EQU 0 (
- DEL /F "%TEMP%\Vivaldi.exe"
- GOTO :exit
+  DEL /F "%TEMP%\Vivaldi.exe"
+  @GOTO :exit
 )
 @ECHO Install failed ERRORLEVEL=%ERRORLEVEL%
 
@@ -36,3 +36,6 @@ COPY /Z /V /Y Vivaldi.6.6.3271.45.x64.exe "%TEMP%\Vivaldi.exe"
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

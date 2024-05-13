@@ -7,21 +7,22 @@
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
-@IF %ERRORLEVEL% NEQ 0 (
+@IF %ERRORLEVEL% NEQ 0 @(
   @SET _ELEV=1
   @Powershell.exe "start cmd.exe -arg '/c """%~0"""' -verb runas" && GOTO :exit
   @ECHO This script needs admin rights.
   @ECHO To do so, right click on this script and select 'Run as administrator'.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
 @SET PRG=
 @FOR %%f IN ("BCompare-4.*.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
-@IF NOT DEFINED PRG (
-  ECHO ** ERROR: No installation program found
-  SET ERRORLEVEL=64
-  GOTO :exit
+@IF NOT DEFINED PRG @(
+  @ECHO ** ERROR: No installation program found
+  @CALL :errorlevel 64
+  @GOTO :exit
 )
 
 @IF NOT EXIST "%LOCALAPPDATA%\lboulard\logs\."^
@@ -42,3 +43,6 @@
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

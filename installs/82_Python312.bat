@@ -8,10 +8,10 @@
 @SET PYVER=
 @FOR /D %%f IN ("python-3.12.*-amd64") DO @SET "PYVER=%%~f"
 @ECHO SET PYVER=%PYVER%
-@IF NOT DEFINED PYVER (
-ECHO ** ERROR: No Python installation program found
-SET ERRORLEVEL=64
-GOTO :exit
+@IF NOT DEFINED PYVER @(
+  @ECHO ** ERROR: No Python installation program found
+  @CALL :errorlevel 64
+  @GOTO :exit
 )
 
 CD "%PYVER%"
@@ -27,3 +27,6 @@ CALL .\python-silent-install.bat"
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

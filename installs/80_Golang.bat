@@ -12,6 +12,7 @@
   @Powershell.exe "start cmd.exe -arg '/c """%~0"""' -verb runas" && GOTO :exit
   @ECHO This script needs admin rights.
   @ECHO To do so, right click on this script and select 'Run as administrator'.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -27,3 +28,6 @@ CALL .\golang-silent-install.bat
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

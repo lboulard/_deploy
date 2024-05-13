@@ -6,9 +6,10 @@
 @SET GVIM=
 @FOR %%f IN ("gvim-*-amd64.exe") DO @SET "GVIM=%%~f"
 @ECHO SET GVIM=%GVIM%
-@IF NOT DEFINED GVIM (
-ECHO ** ERROR: No Gvim installation program found
-GOTO :exit
+@IF NOT DEFINED GVIM @(
+  @ECHO ** ERROR: No Gvim installation program found
+  @CALL :errorlevel 64
+  @GOTO :exit
 )
 
 ".\%GVIM%"
@@ -21,3 +22,6 @@ GOTO :exit
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

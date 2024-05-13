@@ -8,10 +8,10 @@
 @SET PRG=
 @FOR %%f IN ("vlc-3.*-win64.exe") DO @SET "PRG=%%~f"
 @ECHO SET PRG=%PRG%
-@IF NOT DEFINED PRG (
-ECHO ** ERROR: No installation program found
-SET ERRORLEVEL=64
-GOTO :exit
+@IF NOT DEFINED PRG @(
+  @ECHO ** ERROR: No installation program found
+  @CALL :errorlevel 64
+  @GOTO :exit
 )
 
 :: check if admin
@@ -21,6 +21,7 @@ GOTO :exit
   @Powershell.exe "start cmd.exe -arg '/c """%~0"""' -verb runas" && GOTO :exit
   @ECHO This script needs admin rights.
   @ECHO To do so, right click on this script and select 'Run as administrator'.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -36,3 +37,6 @@ GOTO :exit
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1

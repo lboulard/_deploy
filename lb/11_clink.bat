@@ -9,12 +9,14 @@
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
   @ECHO This script shall run as current user.
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
 @IF NOT DEFINED LBPROGRAMS (
- @ECHO Missing LBPROGRAMS environment variable
- @GOTO :exit
+  @ECHO Missing LBPROGRAMS environment variable
+  @CALL :errorlevel 1
+  @GOTO :exit
 )
 
 CMD.EXE /C "%LBPROGRAMS%\clink_modules\clink-register.bat"
@@ -31,6 +33,8 @@ CMD.EXE /C "%LBPROGRAMS%\clink_modules\clink-register.bat"
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
 
+:errorlevel
+@EXIT /B %~1
 
 @:normalize
 @SET RETVAL=%~f1

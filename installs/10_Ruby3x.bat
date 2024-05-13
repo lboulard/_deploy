@@ -7,9 +7,9 @@
 
 :: check if not admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
-@IF %ERRORLEVEL% EQU 0 (
+@IF %ERRORLEVEL% EQU 0 @(
   @ECHO This script shall run as current user.
-  @SETG ERRORLEVEL=64
+  @CALL :errorlevel 128
   @GOTO :exit
 )
 
@@ -17,9 +17,9 @@
 @SET RBINST=
 @FOR %%f IN ("rubyinstaller-3.*-x64.exe") DO @SET "RBINST=%%~f"
 @ECHO SET RBINST=%RBINST%
-@IF NOT DEFINED RBINST (
+@IF NOT DEFINED RBINST @(
   @ECHO ** ERROR: No Ruby installation program found
-  @SET ERRORLEVEL=64
+  @CALL :errorlevel 64
   @GOTO :exit
 )
 
@@ -47,3 +47,6 @@
 @IF NOT ERRORLEVEL 1 PAUSE
 @:_elev
 @ENDLOCAL&EXIT /B %ERR%
+
+:errorlevel
+@EXIT /B %~1
