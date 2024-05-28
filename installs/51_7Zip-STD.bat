@@ -2,9 +2,6 @@
 @CHCP 65001 >NUL:
 @CALL "%~dp0\00_config.bat"
 @IF ERRORLEVEL 1 GOTO :exit
-@CD /D "%ROOT_7ZIP%"
-@IF ERRORLEVEL 1 GOTO :exit
-
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% NEQ 0 (
@@ -16,7 +13,10 @@
   @GOTO :exit
 )
 
-.\7z22.01-zstd-x64.exe /S
+CD /D "%ROOT_7ZIP%"
+@IF ERRORLEVEL 1 GOTO :exit
+
+.\7z2406-x64.exe /S
 
 @:: Pause if not interactive
 @:exit

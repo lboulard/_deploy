@@ -2,8 +2,6 @@
 @CHCP 65001 >NUL:
 @CALL "%~dp0\00_config.bat"
 @IF ERRORLEVEL 1 GOTO :exit
-@CD /D "%ROOT_WINCOMPOSE%"
-@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
@@ -20,6 +18,9 @@
  MD "%LOCALAPPDATA%\lboulard\logs"
 
 :: https://jrsoftware.org/ishelp/index.php?topic=setupcmdline
+
+CD /D "%ROOT_WINCOMPOSE%"
+@IF ERRORLEVEL 1 GOTO :exit
 
 .\WinCompose-Setup-0.9.11.exe /SP- /SILENT /NORESTART /SUPPRESSMSGBOXES^
  /ALLUSERS /LOG="%LOCALAPPDATA%\lboulard\logs\WinCompose.log"

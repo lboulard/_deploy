@@ -2,8 +2,6 @@
 @CHCP 65001 >NUL:
 @CALL "%~dp0\00_config.bat"
 @IF ERRORLEVEL 1 GOTO :exit
-@CD /D "%ROOT_VLC%"
-@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
@@ -15,6 +13,9 @@
   @CALL :errorlevel 128
   @GOTO :exit
 )
+
+CD /D "%ROOT_VLC%"
+@IF ERRORLEVEL 1 GOTO :exit
 
 @SET PRG=
 @FOR %%f IN ("vlc-3.*-win64.exe") DO @SET "PRG=%%~f"

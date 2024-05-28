@@ -2,8 +2,6 @@
 @CHCP 65001 >NUL:
 @CALL "%~dp0\00_config.bat"
 @IF ERRORLEVEL 1 GOTO :exit
-@CD /D "%ROOT_VMWARE%"
-@IF ERRORLEVEL 1 GOTO :exit
 
 :: check if admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
@@ -15,6 +13,9 @@
   @CALL :errorlevel 128
   @GOTO :exit
 )
+
+CD /D "%ROOT_VMWARE%"
+@IF ERRORLEVEL 1 GOTO :exit
 
 @SET PRG=
 @FOR %%f IN ("VMware-workstation-full-*.exe") DO @SET "PRG=%%~f"
