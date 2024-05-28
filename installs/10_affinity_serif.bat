@@ -2,7 +2,7 @@
 @CHCP 65001 >NUL:
 @CALL "%~dp0\00_config.bat"
 @IF ERRORLEVEL 1 GOTO :exit
-@CD /D "%ROOT_AFFINITY%\2.4"
+@CD /D "%ROOT_AFFINITY%\2.5"
 @IF ERRORLEVEL 1 GOTO :exit
 
 :: check if not admin
@@ -16,11 +16,11 @@
 @IF NOT EXIST "%LOCALAPPDATA%\lboulard\logs\."^
  MD "%LOCALAPPDATA%\lboulard\logs"
 
-Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-photo-2.4.0.msix"
+Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-photo-2.5.0.msix"
 @IF ERRORLEVEL 1 GOTO :exit
-Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-designer-2.4.0.msix"
+Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-designer-2.5.0.msix"
 @IF ERRORLEVEL 1 GOTO :exit
-Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-publisher-2.4.0.msix"
+Powershell.exe -NoProfile "Add-AppxPackage -Path affinity-publisher-2.5.0.msix"
 @IF ERRORLEVEL 1 GOTO :exit
 
 @:: Pause if not interactive
