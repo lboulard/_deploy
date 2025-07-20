@@ -11,7 +11,7 @@
   @GOTO :exit
 )
 
-@SET "XDG_ROOT=%LBHOME%"
+@IF NOT DEFINED XDG_ROOT SET "XDG_ROOT=%LBHOME%"
 @IF NOT DEFINED XDG_ROOT (
   @ECHO.**ERROR XDG_ROOT cannot be defined
   @SET ERR=1
@@ -21,7 +21,7 @@
 @TYPE NUL>NUL
 @IF NOT EXIST "%XDG_ROOT%\." MD "%XDG_ROOT%"
 @IF NOT EXIST "%XDG_ROOT%\.cache\." MD "%XDG_ROOT%\.cache"
-@IF NOT EXIST "%XDG_ROOT%\.share\." MD "%XDG%_ROOT\.share"
+@IF NOT EXIST "%XDG_ROOT%\.local\share\." MD "%XDG%_ROOT\.local\share"
 @IF NOT EXIST "%XDG_ROOT%\.config\." MD "%XDG%_ROOT\.config"
 @IF ERRORLEVEL 1 (
  ECHO Failure ERRORLEVEL=%ERRORLEVEL%
@@ -31,7 +31,7 @@
 SETX XDG_CACHE_DIR	"%XDG_ROOT%\.cache"
 SETX XDG_CACHE_HOME	"%XDG_ROOT%\.cache"
 SETX XDG_CONFIG_HOME	"%XDG_ROOT%\.config"
-SETX XDG_DATA_HOME	"%XDG_ROOT%\.share"
+SETX XDG_DATA_HOME	"%XDG_ROOT%\.local\share"
 @IF ERRORLEVEL 1 (
  ECHO Failure ERRORLEVEL=%ERRORLEVEL%
  GOTO :exit
@@ -39,7 +39,7 @@ SETX XDG_DATA_HOME	"%XDG_ROOT%\.share"
 
 @CALL :mklink .cache
 @CALL :mklink .config
-@CALL :mklink .share
+@CALL :mklink .local
 
 @:: Pause if not interactive
 @:exit
