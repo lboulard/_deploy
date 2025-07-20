@@ -6,36 +6,57 @@
 :: check if not admin
 @fsutil dirty query %SYSTEMDRIVE% >nul 2>&1
 @IF %ERRORLEVEL% EQU 0 (
-  @ECHO This script shall run as current user.
-  @CALL :errorlevel 128
+  @ECHO.**FAILURE this script shall run as current user.
+  @SET ERR=2
   @GOTO :exit
 )
 
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\." MD "%LOCALAPPDATA%\xdg"
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\cache\." MD "%LOCALAPPDATA%\xdg\cache"
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\share\." MD "%LOCALAPPDATA%\xdg\share"
-@IF NOT EXIST "%LOCALAPPDATA%\xdg\config\." MD "%LOCALAPPDATA%\xdg\config"
+@SET "XDG_ROOT=%LBHOME%"
+@IF NOT DEFINED XDG_ROOT (
+  @ECHO.**ERROR XDG_ROOT cannot be defined
+  @SET ERR=1
+  @GOTO :exit
+)
+
+@TYPE NUL>NUL
+@IF NOT EXIST "%XDG_ROOT%\." MD "%XDG_ROOT%"
+@IF NOT EXIST "%XDG_ROOT%\.cache\." MD "%XDG_ROOT%\.cache"
+@IF NOT EXIST "%XDG_ROOT%\.share\." MD "%XDG%_ROOT\.share"
+@IF NOT EXIST "%XDG_ROOT%\.config\." MD "%XDG%_ROOT\.config"
 @IF ERRORLEVEL 1 (
  ECHO Failure ERRORLEVEL=%ERRORLEVEL%
  GOTO :exit
 )
 
-SETX XDG_CACHE_DIR	"%%LOCALAPPDATA%%\xdg\cache"
-SETX XDG_CACHE_HOME	"%%LOCALAPPDATA%%\xdg\cache"
-SETX XDG_CONFIG_HOME	"%%LOCALAPPDATA%%\xdg\config"
-SETX XDG_DATA_HOME	"%%LOCALAPPDATA%%\xdg\share"
+SETX XDG_CACHE_DIR	"%XDG_ROOT%\.cache"
+SETX XDG_CACHE_HOME	"%XDG_ROOT%\.cache"
+SETX XDG_CONFIG_HOME	"%XDG_ROOT%\.config"
+SETX XDG_DATA_HOME	"%XDG_ROOT%\.share"
 @IF ERRORLEVEL 1 (
  ECHO Failure ERRORLEVEL=%ERRORLEVEL%
  GOTO :exit
 )
+
+@CALL :mklink .cache
+@CALL :mklink .config
+@CALL :mklink .share
 
 @:: Pause if not interactive
 @:exit
-@SET ERR=%ERRORLEVEL%
+@IF NOT DEFINED ERR SET ERR=%ERRORLEVEL%
+@IF DEFINED _ELEV GOTO :_elev
 @TYPE NUL>NUL
 @ECHO %cmdcmdline% | FIND /i "%~0" >NUL
 @IF NOT ERRORLEVEL 1 PAUSE
 @ENDLOCAL&EXIT /B %ERR%
+
+:mklink
+@IF EXIST "%USERPROFILE%\%~1" (
+  @ECHO.# %USERPROFILE%\%~1 already exists
+  @GOTO :EOF
+)
+MKLINK /D "%USERPROFILE%\%~1"  "%XDG_ROOT%\%~1"
+@GOTO :EOF
 
 :errorlevel
 @EXIT /B %~1
