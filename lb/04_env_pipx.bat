@@ -13,9 +13,11 @@
 
 IF EXIST C:\DEV\. (
   SETX PIPX_BIN_DIR	"C:\Dev\Apps\pipx\bin"
+  SETX PIPX_MAN_DIR	"C:\Dev\Apps\pipx\man"
   SETX PIPX_HOME	"C:\Dev\Apps\pipx"
 ) ELSE (
   SETX PIPX_BIN_DIR	"%%LOCALAPPDATA%%\pipx\bin"
+  SETX PIPX_MAN_DIR	"%%LOCALAPPDATA%%\pipx\man"
   SETX PIPX_HOME	"%%LOCALAPPDATA%%\pipx"
 )
 
